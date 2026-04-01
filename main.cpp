@@ -14,11 +14,31 @@ struct Token {
     string value;   // number, operator, or parenthesis
 };
 
-// Tokenizer
+// Tokenize
 
 vector<Token> tokenize(const string& line) {
     vector<Token> tokens;
-    // TODO
+    int i = 0;
+
+    while (i < static_cast<int>(line.length())) {
+        if (isspace(line[i])) {
+            i++; // space skip
+        }
+        else if (isdigit(line[i])) {
+            string number;
+            while (i < static_cast<int>(line.length()) && isdigit(line[i])) {
+                number += line[i];
+                i++;
+            }
+            tokens.push_back(Token(number));
+        }
+        else {
+            // invalid character, still store it (will be caught later)
+            string bad(1, line[i]);
+            tokens.push_back(Token(bad));
+            i++;
+        }
+    }
     return tokens;
 }
 
@@ -29,27 +49,133 @@ bool isOperator(const string& s) {
 }
 
 int precedence(const string& op) {
-    // TODO
+   if (op == "+" || op == "-") return 1;
+    if (op == "*" || op == "/") return 2;
     return 0;
 }
 
 // Detection
 
 bool isValidPostfix(const vector<Token>& tokens) {
-    // TODO
-    return false;
-}
+    if (tokens.empty()) {
+        return false;
+    }
 
-bool isValidInfix(const vector<Token>& tokens) {
-    // TODO
-    return false;
+    int depth= 0;
+
+    for ( const auto & token : tokens ) {
+        bool isNum = true;
+
+        if (token.value.empty()) {
+            isNum = false;
+        }
+        else {
+            for (char c : token.value) {
+                if (!isdigit(c)) {
+                    isNum = false;
+                    break;
+                }
+            }
+        }
+        if (isNum) {
+            depth++;
+        }
+        else if (isOperator(token.value)) {
+            if (depth < 2) {
+                return false;
+            }
+            depth--;
+        }
+        else {
+            return false;
+        }
+        return depth ==1;
+    }
 }
+bool isValidInfix(const vector<Token>& tokens) {
+        if (tokens.empty()) {
+            return false;
+        }
+        int depth= 0;
+
+        for (const auto & token : tokens) {
+            bool isNum = true;
+
+            if (token.value.empty()) {
+                isNum = false;
+            } else {
+                for (char c : token.value) {
+                    if (!isdigit(c)) {
+                        isNum = false;
+                        break;
+                    }
+                }
+            }
+            if (isNum) {
+                depth++;
+            }
+            else if (isOperator(token.value)) {
+                if (depth < 2) {
+                    return false;
+                }
+                depth--;
+            }
+            else {
+                return false;
+            }
+        }
+        return depth ==1;
+    }
 
 // Conversion
 
 vector<Token> infixToPostfix(const vector<Token>& tokens) {
     vector<Token> output;
-    // TODO
+    ArrayStack<Token> ops;
+
+        for (const auto & token : tokens) {
+            bool isNum = true;
+
+            if (token.value.empty()) {
+                isNum = false;
+            } else {
+                for (char c : token.value) {
+                    if (!isdigit(c)) {
+                        isNum = false;
+                        break;
+                    }
+                }
+            }
+            if (isNum) {
+                output.push_back(token);
+            }
+            else if (token.value == ")") {
+                ops.push(token);
+            }
+            else if (token.value == "(") {
+                while (!ops.empty() && ops.top().value != "("){
+                    output.push_back(ops.top());
+                    ops.pop();
+                }if (!ops.empty() && ops.top().value == "(") {
+                    ops.pop();
+                }
+            }
+            else if (isOperator(token.value)) {
+                while (!ops.empty() &&
+                       isOperator(ops.top().value) &&
+                       precedence(ops.top().value) >= precedence(token.value)) {
+                    output.push_back(ops.top());
+                    ops.pop();
+                       }
+
+                ops.push(token);
+            }
+        }
+
+        while (!ops.empty()) {
+            output.push_back(ops.top());
+            ops.pop();
+        }
     return output;
 }
 
