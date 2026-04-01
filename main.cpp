@@ -1,16 +1,10 @@
 #include <iostream>
-
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
-}
-#include <iostream>
 #include <vector>
 #include <string>
 #include <unordered_map>
 #include <cctype>
 
-#include "ArrayStack.h"
+#include "ArrayStack"
 
 using namespace std;
 

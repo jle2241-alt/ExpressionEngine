@@ -4,4 +4,4 @@ project(untitled10)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(untitled10 main.cpp
-        ArrayStack.h.cpp)
+        ArrayStack)
