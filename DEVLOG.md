@@ -20,34 +20,36 @@ Each entry may be one of the following:
 - Why you chose one approach over another (tradeoffs).
 ---
 ### Entry 1
-**Date:** YYYY-MM-DD
-**Entry Type:** Bug Fix / Edge Case / Engineering Decision
-**Task worked on:**
-**Issue or decision:**
+**Date:** 3/30/2026
+**Entry Type:** Bug Fix 
+**Task worked on:** Array Stack Class
+**Issue or decision:**Added checks using empty function before doing the pop_back.
+If stack was empty, it now throws an error with the appropiate message.
 **Error message / symptom (if applicable):**
-**What I tried:**
-**Fix / resolution (or final decision):**
-**Commit(s):**
+**What I tried/FIX:** I tested this by making a stack in main and calling on pop() on a stack that was empty to see if my exception
+would throw appropiately. 
+
+
 ---
 ### Entry 2
-**Date:** YYYY-MM-DD
-**Entry Type:** Bug Fix / Edge Case / Engineering Decision
-**Task worked on:**
-**Issue or decision:**
+**Date:** 3/31/2026
+**Entry Type:** Edge Case 
+**Task worked on:** Tokenize function
+**Issue or decision:** Added a loop that runs through characters while they are
+digits building a full number.
 **Error message / symptom (if applicable):**
-**What I tried:**
-**Fix / resolution (or final decision):**
-**Commit(s):**
+**What I tried/FIX:** I tested the inputs 12 34 + to see if they would be grouped correctly together.
+
 ---
 ### Entry 3
-**Date:** YYYY-MM-DD
-**Entry Type:** Bug Fix / Edge Case / Engineering Decision
-**Task worked on:**
-**Issue or decision:**
+**Date:** 3/31/2026
+**Entry Type:** Bug Fix
+**Task worked on:** isValidPostfix
+**Issue or decision:** Not properly taking the right number of operands
+that were avaible before applying an operator.
 **Error message / symptom (if applicable):**
-**What I tried:**
-**Fix / resolution (or final decision):**
-**Commit(s):**
+**What I tried/FIX:** depth counter to increment depth for each number and decrement depth for each operator.
+
 ---
 ### Entry 4
 **Date:** YYYY-MM-DD
