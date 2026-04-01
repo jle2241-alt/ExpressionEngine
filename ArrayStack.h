@@ -1,14 +1,14 @@
 //
 // Created by Jvcks on 3/27/2026.
 //
-#ifndef ARRAYSTACK_
+#ifndef ARRAYSTACK
 #define ARRAYSTACK
 
 #include <vector>
 #include <stdexcept>
 
 template <typename T>
-class ArrayStack {
+class ArrayStack{
 private:
     std::vector<T> data;
 

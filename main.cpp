@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <cctype>
 
-#include "ArrayStack"
+#include "ArrayStack.h"
 
 using namespace std;
 
@@ -131,7 +131,7 @@ bool isValidInfix(const vector<Token>& tokens) {
 
 vector<Token> infixToPostfix(const vector<Token>& tokens) {
     vector<Token> output;
-    ArrayStack<Token> ops;
+    ArrayStack <Token> ops;
 
         for (const auto & token : tokens) {
             bool isNum = true;
@@ -183,8 +183,51 @@ vector<Token> infixToPostfix(const vector<Token>& tokens) {
 
 double evalPostfix(const vector<Token>& tokens) {
     ArrayStack<double> stack;
-    // TODO
-    return 0.0;
+
+    for (const auto& token : tokens) {
+        bool isNum = true;
+
+        if (token.value.empty()) {
+            isNum = false;
+        } else {
+            for (char c : token.value) {
+                if (!isdigit(c)) {
+                    isNum = false;
+                    break;
+                }
+            }
+        }
+
+        if (isNum) {
+            stack.push(stod(token.value));
+        }
+        else if (isOperator(token.value)) {
+            double right = stack.top();
+            stack.pop();
+
+            double left = stack.top();
+            stack.pop();
+
+            double result = 0.0;
+
+            if (token.value == "+") {
+                result = left + right;
+            }
+            else if (token.value == "-") {
+                result = left - right;
+            }
+            else if (token.value == "*") {
+                result = left * right;
+            }
+            else if (token.value == "/") {
+                result = left / right;
+            }
+
+            stack.push(result);
+        }
+    }
+
+    return stack.top();
 }
 
 // Main
